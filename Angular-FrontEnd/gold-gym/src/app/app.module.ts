@@ -15,6 +15,9 @@ import { AppRoutingModule } from './app-routing.module'
 import { RouterService } from './services/router.service';
 import { CardComponent } from './components/card/card.component';
 import { ProgramsService } from './services/programs.service';
+import { LoginService } from './services/login.service';
+import { RegisterService } from './services/register.service';
+import { CanActivateRouteGuard } from './can-activate-route.guard';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ import { ProgramsService } from './services/programs.service';
   ],
   providers: [
     RouterService,
-    ProgramsService
+    ProgramsService,
+    LoginService,
+    RegisterService,
+    CanActivateRouteGuard
   ],
   bootstrap: [AppComponent]
 })

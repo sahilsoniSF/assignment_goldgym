@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CanActivateRouteGuard } from './can-activate-route.guard';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { CustomerDashboardComponent } from './components/customer-dashboard/customer-dashboard.component';
 import { LoginComponent } from './components/login/login.component';
@@ -18,14 +19,17 @@ const routes:Routes=[
     {
         path:"dashboard/admin",
         component:AdminDashboardComponent,
+        canActivate:[CanActivateRouteGuard]
     },
     {
         path:"dashboard/customer",
         component:CustomerDashboardComponent,
+        canActivate:[CanActivateRouteGuard]
     },
     {
         path:"dashboard/marketing-team",
         component:MarkteamDashboardComponent,
+        canActivate:[CanActivateRouteGuard]
     },
     {
         path:"",

@@ -3,9 +3,17 @@
   
       <!-- Login Form -->
       <form>
-        <input type="text" id="login" class="fadeIn second mt-5" name="login" placeholder="enter username">
-        <input type="text" id="password" class="fadeIn third mt-2" name="login" placeholder="password">
-        <input type="submit" class="fadeIn fourth mt-2" value="Register">
+        <input type="text" id="login" [(ngModel)]="name" class="fadeIn second mt-5" name="login" placeholder="enter username">
+        <input type="text" id="password" [(ngModel)]="password" class="fadeIn third mt-2" name="login" placeholder="password">
+        <button class="btn btn-primary mt-4 mb-3" (click)="submit()">Register</button>
+        <br>
+        <div style="color: red;">
+          {{errorMessage}}
+        </div>
+        <div style="color: green;">
+          {{createdMessage}}
+        </div>
+        <br>
       </form>
 
     </div>
