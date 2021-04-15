@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EnrolledService } from 'src/app/services/enrolled.service';
 import { ProgramsService } from 'src/app/services/programs.service';
 import { Card } from '../../models/card.model';
 
@@ -10,15 +11,16 @@ import { Card } from '../../models/card.model';
 export class CustomerDashboardComponent implements OnInit {
 
   programs:Array<Card>;
-  constructor(private programsService:ProgramsService) { 
+  constructor(
+    private programsService:ProgramsService,
+    private enrolledService:EnrolledService
+    ) { 
     this.programsService.fetchProgramsFromServer();
+    this.enrolledService.fetchEnrolledProgramsFromServer();
   }
 
   ngOnInit(): void {
-    this.programsService.getPrograms()
-    .subscribe(data=>{
-      this.programs=data;
-    })
+    
   }
 
 }

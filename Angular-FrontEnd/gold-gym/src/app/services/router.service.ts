@@ -30,5 +30,11 @@ export class RouterService {
     this.location.back();
   }
 
-  
+  routeToAllPrograms(){
+    this.router.navigate(['dashboard/customer/all'])
+
+  }
+  routeToEnrolledPrograms(){
+    this.router.navigate(['dashboard/customer/enrolled'])
+  }
 }

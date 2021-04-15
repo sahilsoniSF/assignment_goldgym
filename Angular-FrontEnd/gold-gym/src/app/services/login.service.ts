@@ -5,9 +5,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root',
 })
 export class LoginService {
+
+  userDetails;
   constructor(private http: HttpClient) {}
 
   authenticateCustomer(data) {
+    localStorage.setItem('username',data.name);
     return this.http.post('http://localhost:3001/customer/login', data);
   }
   setBearerToken(token) {
@@ -16,6 +19,10 @@ export class LoginService {
 
   getBearerToken() {
     return localStorage.getItem('token');
+  }
+  removeToken()
+  {
+    localStorage.removeItem('token');
   }
   isUserAuthenticated()
   {

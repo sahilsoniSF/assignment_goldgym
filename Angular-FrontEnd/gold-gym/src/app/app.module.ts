@@ -18,6 +18,11 @@ import { ProgramsService } from './services/programs.service';
 import { LoginService } from './services/login.service';
 import { RegisterService } from './services/register.service';
 import { CanActivateRouteGuard } from './can-activate-route.guard';
+import { CustomerHeaderComponent } from './components/customer-header/customer-header.component';
+import { AllProgramsComponent } from './components/all-programs/all-programs.component';
+import { CustomerEnrolledProgramsComponent } from './components/customer-enrolled-programs/customer-enrolled-programs.component';
+import { EnrolledService } from './services/enrolled.service';
+import { EnrolledCardsComponent } from './components/enrolled-cards/enrolled-cards.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +34,10 @@ import { CanActivateRouteGuard } from './can-activate-route.guard';
     CustomerDashboardComponent,
     HeaderComponent,
     CardComponent,
+    CustomerHeaderComponent,
+    AllProgramsComponent,
+    CustomerEnrolledProgramsComponent,
+    EnrolledCardsComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +50,7 @@ import { CanActivateRouteGuard } from './can-activate-route.guard';
     ProgramsService,
     LoginService,
     RegisterService,
+    EnrolledService,
     CanActivateRouteGuard
   ],
   bootstrap: [AppComponent]
