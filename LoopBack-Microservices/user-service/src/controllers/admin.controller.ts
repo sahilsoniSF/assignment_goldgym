@@ -17,23 +17,23 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {MarkTeam} from '../models';
-import {MarkTeamRepository} from '../repositories';
+import {Admin} from '../models';
+import {AdminRepository} from '../repositories';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import {inject} from '@loopback/core';
 import {Request, RestBindings} from '@loopback/rest';
 
-export class MarkteamController {
+export class AdminController {
   constructor(
-    @repository(MarkTeamRepository)
-    public markTeamRepository : MarkTeamRepository,
+    @repository(AdminRepository)
+    public adminRepository : AdminRepository,
     @inject(RestBindings.Http.REQUEST)
     private request: Request,
   ) {}
 
   // SignUp
-  @post('/mark-team/signup')
+  @post('/admin/signup')
   @response(200, {
     description: 'User Model instance',
   })
@@ -41,43 +41,45 @@ export class MarkteamController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(MarkTeam, {
+          schema: getModelSchemaRef(Admin, {
             title: 'NewUser',
             exclude: ['id'],
           }),
         },
       },
     })
-    user: Omit<MarkTeam, 'id'>,
-  ): Promise<MarkTeam | String> {
-    const checkedUser = await this.markTeamRepository.isUserExist(user);
+    user: Omit<Admin, 'id'>,
+  ): Promise<Admin | String> {
+    const checkedUser = await this.adminRepository.isUserExist(user);
     if (checkedUser.length) {
       return 'User Already Exist';
     } else {
       user.password = bcrypt.hashSync(user.password, 8);
-      return this.markTeamRepository.create(user);
+      return this.adminRepository.create(user);
     }
   }
 
   // Login
-  @post('/mark-team/login')
+  @post('/admin/login')
   @response(200, {
-    description: 'User Login',
+    description: 'admin Login',
   })
   async login(
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(MarkTeam, {
+          schema: getModelSchemaRef(Admin, {
             title: 'NewUser',
             exclude: ['id'],
           }),
         },
       },
     })
-    user: Omit<MarkTeam, 'id'>,
+    user: Omit<Admin, 'id'>,
   ): Promise< Object | String> {
-    const isUserExist = await this.markTeamRepository.isUserExist(user);
+    console.log("here!");
+    
+    const isUserExist = await this.adminRepository.isUserExist(user);
     if (isUserExist.length) {
       const isPassValid = bcrypt.compareSync(
         user.password,
@@ -96,7 +98,7 @@ export class MarkteamController {
 
   // Token Verify
 
-  @post('/mark-team/verify')
+  @post('/admin/verify')
   @response(200,{
     description:"Token Verification"
   })
@@ -105,7 +107,7 @@ export class MarkteamController {
   {
     const header=this.request.headers;
     try{
-      await this.markTeamRepository.verifyToken(header.authorization);
+      await this.adminRepository.verifyToken(header.authorization);
     }
     catch(err)
     {
@@ -116,125 +118,125 @@ export class MarkteamController {
   
   // Default Routes !!!
 
-  @post('/mark-teams')
+  @post('/admins')
   @response(200, {
-    description: 'MarkTeam model instance',
-    content: {'application/json': {schema: getModelSchemaRef(MarkTeam)}},
+    description: 'Admin model instance',
+    content: {'application/json': {schema: getModelSchemaRef(Admin)}},
   })
   async create(
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(MarkTeam, {
-            title: 'NewMarkTeam',
+          schema: getModelSchemaRef(Admin, {
+            title: 'NewAdmin',
             exclude: ['id'],
           }),
         },
       },
     })
-    markTeam: Omit<MarkTeam, 'id'>,
-  ): Promise<MarkTeam> {
-    return this.markTeamRepository.create(markTeam);
+    admin: Omit<Admin, 'id'>,
+  ): Promise<Admin> {
+    return this.adminRepository.create(admin);
   }
 
-  @get('/mark-teams/count')
+  @get('/admins/count')
   @response(200, {
-    description: 'MarkTeam model count',
+    description: 'Admin model count',
     content: {'application/json': {schema: CountSchema}},
   })
   async count(
-    @param.where(MarkTeam) where?: Where<MarkTeam>,
+    @param.where(Admin) where?: Where<Admin>,
   ): Promise<Count> {
-    return this.markTeamRepository.count(where);
+    return this.adminRepository.count(where);
   }
 
-  @get('/mark-teams')
+  @get('/admins')
   @response(200, {
-    description: 'Array of MarkTeam model instances',
+    description: 'Array of Admin model instances',
     content: {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(MarkTeam, {includeRelations: true}),
+          items: getModelSchemaRef(Admin, {includeRelations: true}),
         },
       },
     },
   })
   async find(
-    @param.filter(MarkTeam) filter?: Filter<MarkTeam>,
-  ): Promise<MarkTeam[]> {
-    return this.markTeamRepository.find(filter);
+    @param.filter(Admin) filter?: Filter<Admin>,
+  ): Promise<Admin[]> {
+    return this.adminRepository.find(filter);
   }
 
-  @patch('/mark-teams')
+  @patch('/admins')
   @response(200, {
-    description: 'MarkTeam PATCH success count',
+    description: 'Admin PATCH success count',
     content: {'application/json': {schema: CountSchema}},
   })
   async updateAll(
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(MarkTeam, {partial: true}),
+          schema: getModelSchemaRef(Admin, {partial: true}),
         },
       },
     })
-    markTeam: MarkTeam,
-    @param.where(MarkTeam) where?: Where<MarkTeam>,
+    admin: Admin,
+    @param.where(Admin) where?: Where<Admin>,
   ): Promise<Count> {
-    return this.markTeamRepository.updateAll(markTeam, where);
+    return this.adminRepository.updateAll(admin, where);
   }
 
-  @get('/mark-teams/{id}')
+  @get('/admins/{id}')
   @response(200, {
-    description: 'MarkTeam model instance',
+    description: 'Admin model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(MarkTeam, {includeRelations: true}),
+        schema: getModelSchemaRef(Admin, {includeRelations: true}),
       },
     },
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(MarkTeam, {exclude: 'where'}) filter?: FilterExcludingWhere<MarkTeam>
-  ): Promise<MarkTeam> {
-    return this.markTeamRepository.findById(id, filter);
+    @param.filter(Admin, {exclude: 'where'}) filter?: FilterExcludingWhere<Admin>
+  ): Promise<Admin> {
+    return this.adminRepository.findById(id, filter);
   }
 
-  @patch('/mark-teams/{id}')
+  @patch('/admins/{id}')
   @response(204, {
-    description: 'MarkTeam PATCH success',
+    description: 'Admin PATCH success',
   })
   async updateById(
     @param.path.number('id') id: number,
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(MarkTeam, {partial: true}),
+          schema: getModelSchemaRef(Admin, {partial: true}),
         },
       },
     })
-    markTeam: MarkTeam,
+    admin: Admin,
   ): Promise<void> {
-    await this.markTeamRepository.updateById(id, markTeam);
+    await this.adminRepository.updateById(id, admin);
   }
 
-  @put('/mark-teams/{id}')
+  @put('/admins/{id}')
   @response(204, {
-    description: 'MarkTeam PUT success',
+    description: 'Admin PUT success',
   })
   async replaceById(
     @param.path.number('id') id: number,
-    @requestBody() markTeam: MarkTeam,
+    @requestBody() admin: Admin,
   ): Promise<void> {
-    await this.markTeamRepository.replaceById(id, markTeam);
+    await this.adminRepository.replaceById(id, admin);
   }
 
-  @del('/mark-teams/{id}')
+  @del('/admins/{id}')
   @response(204, {
-    description: 'MarkTeam DELETE success',
+    description: 'Admin DELETE success',
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
-    await this.markTeamRepository.deleteById(id);
+    await this.adminRepository.deleteById(id);
   }
 }

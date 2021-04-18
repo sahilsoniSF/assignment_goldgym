@@ -40,17 +40,23 @@ export class EnrolledProgramController {
     @requestBody()
     username: any,
   ): Promise<Object | String> {
-    const ArrayOfEnrolledProgramsByUser = await this.enrolledProgramRepository.getArrayByUsername(
-      username.username,
-    );
-    console.log(ArrayOfEnrolledProgramsByUser);
-    for (let i = 0; i < ArrayOfEnrolledProgramsByUser.length; i++) {
-
-      
-
-    }
+    const ArrayOfEnrolledProgramsByUser = 
+      await this.enrolledProgramRepository.getArrayByUsername(username.username);
     return ArrayOfEnrolledProgramsByUser;
   }
+
+  @post('/enrolledProgram/delete')
+  @response(200,{
+    description:'Deleting Enroll Program'
+  })
+  async disEnroll(
+    @requestBody()
+    data:Object
+  ):Promise<Object>{
+    await this.enrolledProgramRepository.deleteEnrolledProgram(data)
+    return {message:"Deleted Enrolled Program !!"}
+  }
+
 
   // Default
 
@@ -71,10 +77,22 @@ export class EnrolledProgramController {
       },
     })
     enrolledProgram: Omit<EnrolledProgram, 'id'>,
-  ): Promise<EnrolledProgram> {
-    return this.enrolledProgramRepository.create(enrolledProgram);
+  ): Promise<EnrolledProgram | Object> {
+    const checkingDuplicate=await this.enrolledProgramRepository.find({
+      where:{
+        username:enrolledProgram.username,
+        programId:enrolledProgram.programId
+      }
+    });
+    if(checkingDuplicate.length>0)
+      return {message:"Duplicate Entry"};
+    else 
+      return this.enrolledProgramRepository.create(enrolledProgram);
+
   }
 
+
+  // Not using from UI ---------------------
   @get('/enrolled-programs/count')
   @response(200, {
     description: 'EnrolledProgram model count',

@@ -9,7 +9,8 @@ export class RouterService {
   constructor(private router:Router,private location: Location) { }
 
   routeToDashboardAdmin() {
-    this.router.navigate(['dashboard/admin']);
+    this.router.navigate(['dashboard/admin'])
+    
   }
   routeToDashboardCustomer() {
     this.router.navigate(['dashboard/customer']);

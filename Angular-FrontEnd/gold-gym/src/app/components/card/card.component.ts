@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { EnrolledService } from 'src/app/services/enrolled.service';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({
@@ -11,7 +12,8 @@ export class CardComponent implements OnInit {
   @Input() card;
   query:string;
   constructor(
-    private loginService:LoginService
+    private loginService:LoginService,
+    private enrollService:EnrolledService
   ) { }
 
   ngOnInit(): void {
@@ -20,18 +22,18 @@ export class CardComponent implements OnInit {
     console.log(this.query);
   }
   enroll(){
-    const username=this.loginService.userDetails;
     // toggling button
     (<HTMLInputElement> document.getElementById(`btn-2${this.card.id}`)).disabled=false;
     (<HTMLInputElement> document.getElementById(`btn-1${this.card.id}`)).disabled=true;
+    
 
     // backend access
-    
+    this.enrollService.enrollProgram(this.card.id,localStorage.getItem("username"));
   }
 
   disenroll(){
     (<HTMLInputElement> document.getElementById(`btn-1${this.card.id}`)).disabled=false;
     (<HTMLInputElement> document.getElementById(`btn-2${this.card.id}`)).disabled=true;
-
+    this.enrollService.disenrollProgram({programId:this.card.id,username:localStorage.getItem("username")});
   }
 }

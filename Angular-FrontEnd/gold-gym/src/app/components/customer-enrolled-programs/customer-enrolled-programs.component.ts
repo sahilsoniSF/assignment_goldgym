@@ -13,12 +13,16 @@ export class CustomerEnrolledProgramsComponent implements OnInit {
   ArrayofPrograms = [];
   constructor(
     private enrolledService: EnrolledService,
-  ) {  }
+  ) { 
+    this.ArrayofPrograms=[];
+   }
 
   ngOnInit(): void {
+
+    // previous code
     this.enrolledService.getEPrograms()
     .subscribe(data=>{
-      console.log("Getting the Enrolled programs",data);
+      this.ArrayofPrograms=[];
       this.ArrayofPrograms=data;
     },
     err=>{

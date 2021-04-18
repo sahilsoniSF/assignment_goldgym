@@ -18,8 +18,9 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
-  
+
   submit() {
+
     const user = {
       name: this.uname,
       password: this.password,
@@ -37,15 +38,32 @@ export class LoginComponent implements OnInit {
           this.routerService.routeToDashboardCustomer();
         },
         (err) => {
-          // console.log("Error : ",err);
           this.errorMessage = err.error.text;
-          // console.log(this.errorMessage);
         }
       );
     } else if (this.radio == '2') {
-      this.routerService.routeToDashboardAdmin();
+      this.loginService.authenticateAdmin(user).subscribe(
+        (data) => {
+          this.loginService.setBearerToken(data['token']);
+          this.routerService.routeToDashboardAdmin();
+        },
+        (err) => {
+          this.errorMessage = err.error.text;
+        }
+      );
     } else if (this.radio == '3') {
-      this.routerService.routeToDashboardMarkTeam();
+      this.loginService.authenticateMarkTeam(user).subscribe(
+        (data) => {
+          this.loginService.setBearerToken(data['token']);
+          this.routerService.routeToDashboardMarkTeam();
+        },
+        (err) => {
+          this.errorMessage = err.error.text;
+        }
+      );
     }
+
   }
+
+
 }

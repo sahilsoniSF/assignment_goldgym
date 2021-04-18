@@ -23,4 +23,22 @@ export class EnrolledProgramRepository extends DefaultCrudRepository<
     });
       return result;
   }
+
+  async deleteEnrolledProgram(data:any)
+  {
+    const resultId=await this.find({
+      where:{
+        username:data.username,
+        programId:data.programId
+      }
+    });
+    if(resultId && resultId[0] )
+    {
+      const id=resultId[0].id;
+      const result=await this.deleteById(id);
+    }
+    return "Removed Enrolled Program !"
+  }
+
+
 }
