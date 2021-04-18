@@ -11,6 +11,12 @@ export class AdminDashboardComponent implements OnInit {
 
   listOfPrograms:Card[]=[];
   open:boolean=false;
+  // new program details
+  title:string;
+  price:number;
+  desc:string;
+  duration:string;
+
   constructor(
     private programService:ProgramsService
   ) {
@@ -28,7 +34,14 @@ export class AdminDashboardComponent implements OnInit {
     this.open=this.open?false:true;
   }
   addNewProgram(){
-
+    const data={
+      title:this.title,
+      price:this.price,
+      desc:this.desc,
+      duration:this.duration
+    }
+    this.programService.addNewProgram(data);
+    this.openIt();
   }
   
 

@@ -32,5 +32,13 @@ export class ProgramsService{
     {
         return this.programsSubject;
     }
+
+    // Add new program
+    addNewProgram(data){
+        this.http.post('http://localhost:3002/programs',data)
+        .subscribe(data=>{
+            this.fetchProgramsFromServer();
+        })
+    }
     
 }
