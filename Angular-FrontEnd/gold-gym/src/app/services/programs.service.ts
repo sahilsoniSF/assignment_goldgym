@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-// import 'rxjs/add/operator/do';
-// import 'rxjs/add/observable/from';
 import { Card } from '../models/card.model';
 
 @Injectable()

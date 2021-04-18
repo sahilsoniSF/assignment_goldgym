@@ -1,1 +1,10 @@
-<p>markteam-dashboard works!</p>
+<app-mark-team-header></app-mark-team-header>
+
+<!-- All Programs Details -->
+<div class="row container mt-1 ml-1 ">
+    <app-mark-team-cards [card]="card" *ngFor="let card of listOfEnquiries"></app-mark-team-cards>
+</div>
+
+<div class="container mt-3 ml-3" *ngIf="listOfEnquiries.length < 1">
+    <h2>No Enquiries , All Set !!</h2>
+</div>

@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
     if (this.radio == '1') {
       this.loginService.authenticateCustomer(user).subscribe(
         (data) => {
+          this.loginService.userId=data.id;
           this.loginService.setBearerToken(data['token']);
           this.routerService.routeToDashboardCustomer();
         },

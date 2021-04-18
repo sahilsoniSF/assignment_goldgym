@@ -1,1 +1,37 @@
-<p>admin-dashboard works!</p>
+<app-admin-header></app-admin-header>
+
+<!-- Add button -->
+<div class="pl-4 pb-4 pt-4" style="background-color: powderblue; border: saddlebrown 1px solid;">
+    <div>
+        <button class="btn btn-primary" (click)="openIt()">Add New Program</button>
+
+    </div>
+</div>
+
+<!-- Add new Programs -->
+<div class="pt-3 pb-3 pl-5 pr-5" *ngIf="open" style="border: solid teal 1px; background-color: powderblue;">
+    <form action="/action_page.php" >
+        <div class="form-group">
+            <label for="email">Title:</label>
+            <input type="email" class="form-control" id="title">
+        </div>
+        <div class="form-group">
+            <label for="pwd">Description:</label>
+            <input type="password" class="form-control" id="desc">
+        </div>
+        <div class="form-group">
+            <label for="pwd">Price: (number)</label>
+            <input type="password" class="form-control" id="price">
+        </div>
+        <div class="form-group">
+            <label for="pwd">Duration:</label>
+            <input type="password" class="form-control" id="duration">
+        </div>
+        <button type="submit" class="btn btn-success" (click)="addNewProgram()">Submit</button>
+    </form>
+</div>
+
+<!-- All Programs Details -->
+<div class="row container mt-1 ml-1 ">
+    <app-admin-cards [card]="card" *ngFor="let card of listOfPrograms"></app-admin-cards>
+</div>

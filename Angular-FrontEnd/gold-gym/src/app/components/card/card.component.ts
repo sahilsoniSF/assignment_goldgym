@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { EnquiriesService } from 'src/app/services/enquiries.service';
 import { EnrolledService } from 'src/app/services/enrolled.service';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -13,13 +14,15 @@ export class CardComponent implements OnInit {
   query:string;
   constructor(
     private loginService:LoginService,
-    private enrollService:EnrolledService
+    private enrollService:EnrolledService,
+    private enquiriesService:EnquiriesService
   ) { }
 
   ngOnInit(): void {
   }
   submitQuery(){
-    console.log(this.query);
+    if(this.query.length>1)
+    this.enquiriesService.submitQuery(this.query,this.card.id,this.loginService.userId);
   }
   enroll(){
     // toggling button

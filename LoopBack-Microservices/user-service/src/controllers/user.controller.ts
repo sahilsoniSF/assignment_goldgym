@@ -87,7 +87,7 @@ export class UserController {
       );
       if (isPassValid) {
         let token = jwt.sign({id: user.name}, 'soni-key', {expiresIn: 84600});
-        return {token:token};
+        return {token:token,id:isUserExist[0].id};
       }
       return 'Password is Invalid';
     } else {

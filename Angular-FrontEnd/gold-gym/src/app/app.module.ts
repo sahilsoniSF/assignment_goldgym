@@ -23,6 +23,11 @@ import { AllProgramsComponent } from './components/all-programs/all-programs.com
 import { CustomerEnrolledProgramsComponent } from './components/customer-enrolled-programs/customer-enrolled-programs.component';
 import { EnrolledService } from './services/enrolled.service';
 import { EnrolledCardsComponent } from './components/enrolled-cards/enrolled-cards.component';
+import { AdminHeaderComponent } from './components/admin-header/admin-header.component';
+import { MarkTeamHeaderComponent } from './components/mark-team-header/mark-team-header.component';
+import { AdminCardsComponent } from './components/admin-cards/admin-cards.component';
+import { MarkTeamCardsComponent } from './components/mark-team-cards/mark-team-cards.component';
+import { EnquiriesService } from './services/enquiries.service';
 
 @NgModule({
   declarations: [
@@ -38,6 +43,10 @@ import { EnrolledCardsComponent } from './components/enrolled-cards/enrolled-car
     AllProgramsComponent,
     CustomerEnrolledProgramsComponent,
     EnrolledCardsComponent,
+    AdminHeaderComponent,
+    MarkTeamHeaderComponent,
+    AdminCardsComponent,
+    MarkTeamCardsComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +60,7 @@ import { EnrolledCardsComponent } from './components/enrolled-cards/enrolled-car
     LoginService,
     RegisterService,
     EnrolledService,
+    EnquiriesService,
     CanActivateRouteGuard
   ],
   bootstrap: [AppComponent]

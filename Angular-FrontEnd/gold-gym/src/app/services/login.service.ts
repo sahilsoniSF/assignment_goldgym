@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
 
+  userId:number=-1;
   constructor(private http: HttpClient) {}
 
   setBearerToken(token) {
@@ -23,7 +25,7 @@ export class LoginService {
   // Customer Services !!
   authenticateCustomer(data) {
     localStorage.setItem('username',data.name);
-    return this.http.post('http://localhost:3001/customer/login', data);
+    return this.http.post<any>('http://localhost:3001/customer/login', data);
   }
   
   isUserAuthenticated()
